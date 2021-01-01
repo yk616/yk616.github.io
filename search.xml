@@ -11,6 +11,12 @@
 <h2 id="2020年"><a class="markdownIt-Anchor" href="#2020年"></a> 2020年</h2>
 <ul>
 <li>
+<p>12月31日：</p>
+<ul>
+<li>调整了网页黑白效果</li>
+</ul>
+</li>
+<li>
 <p>10月13日：</p>
 <ul>
 <li>将hexo升级至5.0版本，next升级至8.1版本</li>
@@ -1580,24 +1586,6 @@ function tihuan1() {
       </tags>
   </entry>
   <entry>
-    <title>latex数学符号大全</title>
-    <url>/2020/05/12/latex%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E5%A4%A7%E5%85%A8/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>在网上发现了一个latex数学符号大全的PDF，现摘录于此处。</p>
-<a id="more"></a>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpCwV.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpPoT.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUp9e0.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpSLq.jpg" alt="" /></p>
-<p>原pdf下载地址：<a href="https://www.caam.rice.edu/~heinken/latex/symbols.pdf">链接</a>。</p>
-]]></content>
-      <categories>
-        <category>拾贝</category>
-      </categories>
-      <tags>
-        <tag>latex</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>梯度笔记</title>
     <url>/2020/07/03/%E6%A2%AF%E5%BA%A6%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
@@ -2593,6 +2581,24 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
       <tags>
         <tag>梯度</tag>
         <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>latex数学符号大全</title>
+    <url>/2020/05/12/latex%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>在网上发现了一个latex数学符号大全的PDF，现摘录于此处。</p>
+<a id="more"></a>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpCwV.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpPoT.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUp9e0.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpSLq.jpg" alt="" /></p>
+<p>原pdf下载地址：<a href="https://www.caam.rice.edu/~heinken/latex/symbols.pdf">链接</a>。</p>
+]]></content>
+      <categories>
+        <category>拾贝</category>
+      </categories>
+      <tags>
+        <tag>latex</tag>
       </tags>
   </entry>
   <entry>
