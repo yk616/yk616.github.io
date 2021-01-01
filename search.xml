@@ -472,6 +472,170 @@ margin-left/right:0px：与字体的距离。<br />
       </tags>
   </entry>
   <entry>
+    <title>树莓派4B入手配置</title>
+    <url>/2019/12/02/%E6%A0%91%E8%8E%93%E6%B4%BE4B%E5%85%A5%E6%89%8B%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p><img data-src="https://s1.ax1x.com/2020/05/26/tFTv90.png" alt="" /></p>
+<a id="more"></a>
+<h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+<blockquote>
+<p>前些时候入手了今年新出的<a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">树莓派4B</a>，系统配置为2GB版本加16GSD卡。其实如果资金充裕的话，还是应当购买4GB版本加32GSD卡使用会更加流畅。其余配件包括：官方充电线（带开关，5V3A），风扇，（散热片，）读卡器，外壳（建议购买能够方便向引脚接线的外壳）。没有额外购买显示屏。合计支出在550元左右。但是在之后的配置过程中，因为在网上所查阅的资料质量良莠不齐，走了许多弯路。在此将自己整理好的配置教程放在这里。</p>
+</blockquote>
+<hr />
+<h2 id="配置过程"><a class="markdownIt-Anchor" href="#配置过程"></a> 配置过程</h2>
+<h3 id="一-镜像烧录"><a class="markdownIt-Anchor" href="#一-镜像烧录"></a> 一、镜像烧录</h3>
+<p>树莓派4B的CPU架构为<strong>arm7l</strong>（不是arm64，需要在以后的软件安装中留意）。<br />
+树莓派可以安装许多种类相对应的操作系统，除官方镜像外，在GitHub上可以找到适配树莓派4B的64位<a href="https://github.com/openfans-community-offical/Debian-Pi-Aarch64">操作系统镜像</a>。作为入门小白，选择安装官网上提供的基于<strong>Debian10（buster）<strong>的</strong>32位</strong><a href="https://downloads.raspberrypi.org/raspbian_full_latest">raspbian系统镜像</a>（大小约6G），包含了常用的功能。<br />
+此外需要下载安装的软件有：</p>
+<ul>
+<li>SD卡格式化软件 <a href="https://www.sdcard.org/chs/downloads/formatter/eula_windows/index.html">SD Card Formatter</a></li>
+<li>系统镜像烧录软件 <a href="https://sourceforge.net/projects/win32diskimager/files/latest/download">win32diskimager</a></li>
+<li>远程控制软件 <a href="https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.19.923-Windows.exe">VNC Viewer</a></li>
+</ul>
+<p>将SD卡用格式化软件点format进行格式化。格式化之后用烧录软件选择下载好的镜像以及SD卡之后点write进行写入。<br />
+因为我未购买显示屏，所以需要使用远程连接方式控制树莓派。<br />
+用记事本创建两个文件，第一个命名为<code>ssh</code>，不带后缀；另一个文件输入能使树莓派连接的WiFi信息（校园网等公共网络无法连接，可用手机热点代替），格式如下（参考：<a href="http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html">http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html</a> ）：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">country</span>=CN</span><br><span class="line"><span class="attribute">ctrl_interface</span>=DIR=/var/run/wpa_supplicant <span class="attribute">GROUP</span>=netdev</span><br><span class="line"><span class="attribute">update_config</span>=1</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line"><span class="attribute">ssid</span>=<span class="string">&quot;WiFi-A&quot;</span></span><br><span class="line"><span class="attribute">psk</span>=<span class="string">&quot;12345678&quot;</span></span><br><span class="line"><span class="attribute">key_mgmt</span>=WPA-PSK</span><br><span class="line"><span class="attribute">priority</span>=1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line"><span class="attribute">ssid</span>=<span class="string">&quot;WiFi-B&quot;</span></span><br><span class="line"><span class="attribute">psk</span>=<span class="string">&quot;12345678&quot;</span></span><br><span class="line"><span class="attribute">key_mgmt</span>=WPA-PSK</span><br><span class="line"><span class="attribute">priority</span>=2</span><br><span class="line"><span class="attribute">scan_ssid</span>=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>ssid</code>为WiFi的名称，<code>psk</code>为该WiFi密码，<code>priority</code>为该WiFi连接的优先级（数字越大越优先连接）。确保树莓派连接的WiFi是自己的电脑也在<strong>同时</strong>连接的。<br />
+文件保存后命名为<code>wpa_supplicant.conf</code>，用conf替代原来的txt后缀。将两个文件直接放在烧录完镜像之后的SD卡的<strong>根目录</strong>下。<br />
+打开Windows命令行，输入<code>arp -a</code>查看所有已连接设备的IP地址，记下。<br />
+完成上述工作之后，将TF卡插入树莓派，开机。</p>
+<h3 id="二-远程连接树莓派"><a class="markdownIt-Anchor" href="#二-远程连接树莓派"></a> 二、远程连接树莓派</h3>
+<p>确认树莓派的IP地址。<br />
+待树莓派启动后几分钟，若上一步的WiFi设置无误，即树莓派已经同电脑连接在同一个WiFi之下后，再次打开Windows命令行，输入<code>arp -a</code>查看所有已连接设备的IP地址，观察相较于树莓派未开机前多了哪一个，并确保其为：</p>
+<ul>
+<li>静态</li>
+<li>IP地址最后一个数字不是1或者255。</li>
+</ul>
+<p>该多出来的IP地址即为树莓派的IP地址。<br />
+（查找IP地址的其他方法例如可以使用软件“ipscan22.exe”，使用方式参考：<a href="https://www.cnblogs.com/SystemCall/archive/2019/06/16/11032391.html">https://www.cnblogs.com/SystemCall/archive/2019/06/16/11032391.html</a> ）<br />
+现在有两种连接树莓派的方式。一种是通过ssh，另一种是通过vnc。第一次连接必须使用ssh。打开命令行，输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh pi@[树莓派ip地址]</span><br></pre></td></tr></table></figure>
+<p>其中，pi为默认账户名称（账户名称以后<strong>不要更改</strong>，除非已经熟悉账户进阶操作）。如果树莓派连接了与电脑相同的WiFi，在输入命令后其会弹出输入密码的指令。<br />
+默认帐号如下：Username：<code>pi</code> Password：<code>raspberry</code><br />
+输入无误后会显示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberry <span class="comment"># ~ </span></span><br></pre></td></tr></table></figure>
+<p>即为树莓派操作系统的命令行界面。如果显示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">remote host identification has changed</span><br></pre></td></tr></table></figure>
+<p>则需要按照报错信息删除.ssh文件夹下的known_hosts文件重新连接。<br />
+之后会提示输入<code>passwd</code>进行修改密码，可以不修改，后面会有提示。<br />
+输入<code>sudo apt-get install xrdp</code>安装对Windows远程桌面的支持。<br />
+（有一说需要在终端中输入<code>sudo apt-get install ttf-wqy-microhei</code>安装中文字体，但是经测试不需要安装也可加载中文）<br />
+输入<code>sudo raspi-config</code>进入树莓派系统配置。大概的界面如下：<img data-src="https://s1.ax1x.com/2020/05/26/tF7Ygf.png" alt="" /><br />
+接下来要配置的有：默认时间、默认地区、默认语言、默认开机方式。<br />
+这里使用方向键↑↓进行选择，方向键←→在显示选择和返回时使用，按回车键确认，空格键用于某些时候的选择。<br />
+其中需要修改如下所示的几个选项。<br />
+1、Change user password。前面若没有修改可以在这里修改。<br />
+2、Boot options。选择B1，再选择B4，目的是使之后开机默认进入图形界面。选择B3，再选择no，关闭开机前动画。<br />
+3、Localisation options。选择I1系统调整语言，会有多种语言的选项，按空格键进行选择，被选择显示的语言会在左边[ ]内有<code>*</code>号。其中有一些是<strong>必须</strong>选择的：<br />
+<img data-src="https://s1.ax1x.com/2020/05/26/tF7cvT.jpg" alt="" /></p>
+<ul>
+<li><strong>en_GB.UTF-8</strong>、<strong>UTF-8</strong>、<strong>zh_CN.UTF-8</strong><br />
+选择完之后按回车键，接着选择默认语言，在其中选择<strong>zh_CN.UTF-8</strong>。等待一段时间。<br />
+接着选I2调整时区。选择Asia之后选择shanghai。<br />
+接着选I4调整网络地区。选择CN China。<br />
+4、Interfacing options。选择开启P1 camera、P2 SSH、P3 VNC、P6 serial、P8 remote gpio。<br />
+5、Advanced options。开启A1，用于充分利用TF卡空间。开启A2，在整个屏幕上显示。选择A4，再选择force 3.5mm，使声音从耳机孔流出。设置分辨率，选择A5，再选择DMT mode 85或者更大的分辨率，才能够在使用vnc时正常显示，否则会显示<code>cannot currently show the desktop</code>。选择A6，提高显示画质（但是在4B上未配置成功）。<img data-src="https://s1.ax1x.com/2020/05/26/tF7jVH.png" alt="" /><br />
+6、Update。可以选择但是一般不会更新成功（涉及到换源问题）。<br />
+（参考：<a href="http://www.waveshare.net/study/article-597-1.html">http://www.waveshare.net/study/article-597-1.html</a> ，但是此教程对应的树莓派版本较旧）<br />
+设置完毕，选择yes进行重启。</li>
+</ul>
+<h3 id="三-进入图形界面"><a class="markdownIt-Anchor" href="#三-进入图形界面"></a> 三、进入图形界面</h3>
+<p>现在可以使用ssh或者vnc进入树莓派图形界面。</p>
+<h4 id="1-ssh"><a class="markdownIt-Anchor" href="#1-ssh"></a> 1、ssh</h4>
+<p>在开始菜单→Windows附件中找到<strong>远程桌面</strong>，在“计算机”中输入树莓派的IP地址，进入登录界面之后输入用户名pi和你设定的密码就可以进入树莓派桌面。<br />
+除了使用远程桌面连接ssh，还可使用其他软件进行登陆，例如putty、xshell6等。</p>
+<h4 id="2-vnc"><a class="markdownIt-Anchor" href="#2-vnc"></a> 2、vnc</h4>
+<p>打开已经安装好的vnc viewer，输入树莓派IP地址，点continue（第一次连接），之后输入用户名pi，密码（可以选择下面的remember password，以后不用再输入），进入树莓派桌面。<br />
+进入图形界面时的操作速度取决于：（1）树莓派本身内存大小；（2）运行远程桌面机器处理器。例如，树莓派4B的2G版本下，系统操作速度：ssh（电脑端）&gt;vnc（电脑端）&gt;vnc（iOS）端。<br />
+<strong>不建议</strong>同时登录ssh和vnc。<br />
+第一次进入桌面会自动提示进行配置初始设定，其中第一个点“use us keyboard”之后选择next，第二个密码进行修改后next（必须输入内容，可以将你设定好的密码再输进去就可），第三个可以直接next，第四个WiFi界面直接skip，完成配置（因为前面已经配置WiFi了）。<br />
+如果你一直点next，会跳到系统update software界面进行更新，但是一般会失败，换源问题。<br />
+（其他可以vnc连接的软件还有更强大的teamviewer，配置方式参考：<br />
+<a href="https://github.com/TommyZihao/Zihao-Blog/blob/master/02%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E9%85%8D%E7%BD%AE%E6%A0%91%E8%8E%93%E6%B4%BE.md">https://github.com/TommyZihao/Zihao-Blog/blob/master/02一劳永逸配置树莓派.md</a> ）</p>
+<h3 id="四-进行系统基础配置"><a class="markdownIt-Anchor" href="#四-进行系统基础配置"></a> 四、进行系统基础配置</h3>
+<h4 id="1-换源"><a class="markdownIt-Anchor" href="#1-换源"></a> 1、换源</h4>
+<ul>
+<li>官方的树莓派软件下载源更换*（老手可直接用vim编辑）*：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<p>在nano中将原来的源用#注释掉，换成国内源（以中科大为例）。<br />
+在新的一行添加</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">deb http:<span class="regexp">//mi</span>rrors.ustc.edu.cn<span class="regexp">/raspbian/</span>raspbian/ buster main contrib non-free rpi</span><br></pre></td></tr></table></figure>
+<p>（注意，buster不是stretch）Ctrl+o保存，按回车， Ctrl+x退出。然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure>
+<p>注释然后添加：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">deb http:<span class="regexp">//mi</span>rrors.ustc.edu.cn<span class="regexp">/archive.raspberrypi.org/</span>debian/ buster main ui</span><br></pre></td></tr></table></figure>
+<p>执行（这一步时间较长）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<ul>
+<li>python的pip下载源更换：</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo nano <span class="regexp">/etc/</span>pip.conf</span><br></pre></td></tr></table></figure>
+<p>同上注释掉原来源，换成国内源（以中科大为例）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">timeout &#x3D; 10</span><br><span class="line">index-url &#x3D; https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br><span class="line">extra-index-url &#x3D; https:&#x2F;&#x2F;www.piwheels.org&#x2F;simple&#x2F;</span><br><span class="line">[install]</span><br><span class="line">trusted-host &#x3D; pypi.mirrors.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+<p>保存之后执行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo pip3 install --upgrade pip</span><br></pre></td></tr></table></figure>
+<p>（更多的国内源参见：<br />
+Raspbian软件源：<a href="https://www.jianshu.com/p/67b9e6ebf8a0">https://www.jianshu.com/p/67b9e6ebf8a0</a> 注意stretch改为buster<br />
+pip源：<a href="https://www.pisugar.net/20190715/">https://www.pisugar.net/20190715/</a> ）</p>
+<h4 id="2-vim"><a class="markdownIt-Anchor" href="#2-vim"></a> 2、vim</h4>
+<p>树莓派默认不带vim（自带vi）。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
+<h4 id="3-输入法"><a class="markdownIt-Anchor" href="#3-输入法"></a> 3、输入法</h4>
+<p>有三种输入法可供选择：fcitx，scim，ibus。</p>
+<ul>
+<li>fcitx（接近Windows）：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>scim（不方便）：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install scim-pinyin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ibus（已知缺陷，中文输入时有可能乱码）：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install ibus ibus-pinyin</span><br></pre></td></tr></table></figure>
+<h4 id="4-python推荐安装模块"><a class="markdownIt-Anchor" href="#4-python推荐安装模块"></a> 4、python推荐安装模块</h4>
+<p>pip升级：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pip3 install --upgrade pip</span><br></pre></td></tr></table></figure>
+<p>查看pip已经安装模块（终端中需注意python2和python3）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 list</span><br></pre></td></tr></table></figure>
+<h4 id="5-python版本问题"><a class="markdownIt-Anchor" href="#5-python版本问题"></a> 5、python版本问题</h4>
+<p>系统已经预装python2、python3，默认的python版本为<strong>python2.7</strong>。输入python、pip时分别会显示python2、pip2。使用python3需要输入python3、pip3。<br />
+更改默认python版本方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/bin</span><br><span class="line">sudo rm -rf python</span><br><span class="line">sudo ln -s /usr/bin/python3 /usr/bin/python</span><br></pre></td></tr></table></figure>
+<p>如需恢复为python2，将上述步骤中python3改为python2。<br />
+<s>不排除以后报错</s></p>
+<h4 id="6-系统备份"><a class="markdownIt-Anchor" href="#6-系统备份"></a> 6、系统备份</h4>
+<p>比较简便的操作是继续使用上述烧录软件win32diskimager，输入备份镜像名（需要<strong>手动</strong>加img后缀），选择树莓派系统的SD卡后点write，此过程时间长且会生成和SD卡容量<strong>一样大</strong>的镜像文件，较浪费空间。<br />
+假如条件允许，可以参考：<a href="https://www.zhihu.com/question/55406328">https://www.zhihu.com/question/55406328</a> 。</p>
+<h4 id="7-其他软件安装"><a class="markdownIt-Anchor" href="#7-其他软件安装"></a> 7、其他软件安装</h4>
+<ul>
+<li>趣味：安装oneko、cmatrix</li>
+<li>练习打字软件：ktouch（apt安装）、<a href="https://www.tipp10.com/en/download/getfile/5/">tipp10</a></li>
+<li>垃圾清理软件：<a href="https://www.bleachbit.org/download/file/t?file=bleachbit_2.2_all_debian9.deb">bleachbit</a>（谨慎使用）</li>
+<li>扫雷：gnome-mines</li>
+<li>识别验证码（配合pytesseract）：tesseract-ocr</li>
+<li>Chrome浏览器默认私密浏览：在快捷方式中编辑properties→桌面项→命令 处添加<code>--incognito</code></li>
+<li>vscode：安装vs code – oss，在linux上使用</li>
+<li>普通用户<code>xhost +</code></li>
+</ul>
+<!--
+python推荐安装模块（其中一些安装时间会很长）：
+beautifulsoup4、cpython、ddgr、imageio、ipython、jieba、jupyter、manimlib、matplotlib、numpy、pandas、pillow、pyecharts、pyinstaller、pylab、pyqt5、pytesseract、requests、scikit-learn、scipy、scrapy、six、statsmodels、sympy、tensorflow、wordcloud、xlrd、xlwt
+注：
+1、安装python的scipy时需要首先安装python-opencv gfortran libatlas-dev
+2、安装pycairo要通过whl安装；安装manimlib要设定Unicode UTF-8
+-->
+]]></content>
+      <categories>
+        <category>求知</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网站推荐</title>
     <url>/2019/12/05/%E7%BD%91%E7%AB%99%E6%8E%A8%E8%8D%90/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>个人收集的实用网站集合。</p>
@@ -855,170 +1019,6 @@ canon出品的免费纸模型素材提供网站</p>
       </categories>
       <tags>
         <tag>网站</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>树莓派4B入手配置</title>
-    <url>/2019/12/02/%E6%A0%91%E8%8E%93%E6%B4%BE4B%E5%85%A5%E6%89%8B%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p><img data-src="https://s1.ax1x.com/2020/05/26/tFTv90.png" alt="" /></p>
-<a id="more"></a>
-<h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
-<blockquote>
-<p>前些时候入手了今年新出的<a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">树莓派4B</a>，系统配置为2GB版本加16GSD卡。其实如果资金充裕的话，还是应当购买4GB版本加32GSD卡使用会更加流畅。其余配件包括：官方充电线（带开关，5V3A），风扇，（散热片，）读卡器，外壳（建议购买能够方便向引脚接线的外壳）。没有额外购买显示屏。合计支出在550元左右。但是在之后的配置过程中，因为在网上所查阅的资料质量良莠不齐，走了许多弯路。在此将自己整理好的配置教程放在这里。</p>
-</blockquote>
-<hr />
-<h2 id="配置过程"><a class="markdownIt-Anchor" href="#配置过程"></a> 配置过程</h2>
-<h3 id="一-镜像烧录"><a class="markdownIt-Anchor" href="#一-镜像烧录"></a> 一、镜像烧录</h3>
-<p>树莓派4B的CPU架构为<strong>arm7l</strong>（不是arm64，需要在以后的软件安装中留意）。<br />
-树莓派可以安装许多种类相对应的操作系统，除官方镜像外，在GitHub上可以找到适配树莓派4B的64位<a href="https://github.com/openfans-community-offical/Debian-Pi-Aarch64">操作系统镜像</a>。作为入门小白，选择安装官网上提供的基于<strong>Debian10（buster）<strong>的</strong>32位</strong><a href="https://downloads.raspberrypi.org/raspbian_full_latest">raspbian系统镜像</a>（大小约6G），包含了常用的功能。<br />
-此外需要下载安装的软件有：</p>
-<ul>
-<li>SD卡格式化软件 <a href="https://www.sdcard.org/chs/downloads/formatter/eula_windows/index.html">SD Card Formatter</a></li>
-<li>系统镜像烧录软件 <a href="https://sourceforge.net/projects/win32diskimager/files/latest/download">win32diskimager</a></li>
-<li>远程控制软件 <a href="https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.19.923-Windows.exe">VNC Viewer</a></li>
-</ul>
-<p>将SD卡用格式化软件点format进行格式化。格式化之后用烧录软件选择下载好的镜像以及SD卡之后点write进行写入。<br />
-因为我未购买显示屏，所以需要使用远程连接方式控制树莓派。<br />
-用记事本创建两个文件，第一个命名为<code>ssh</code>，不带后缀；另一个文件输入能使树莓派连接的WiFi信息（校园网等公共网络无法连接，可用手机热点代替），格式如下（参考：<a href="http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html">http://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html</a> ）：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">country</span>=CN</span><br><span class="line"><span class="attribute">ctrl_interface</span>=DIR=/var/run/wpa_supplicant <span class="attribute">GROUP</span>=netdev</span><br><span class="line"><span class="attribute">update_config</span>=1</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line"><span class="attribute">ssid</span>=<span class="string">&quot;WiFi-A&quot;</span></span><br><span class="line"><span class="attribute">psk</span>=<span class="string">&quot;12345678&quot;</span></span><br><span class="line"><span class="attribute">key_mgmt</span>=WPA-PSK</span><br><span class="line"><span class="attribute">priority</span>=1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line"><span class="attribute">ssid</span>=<span class="string">&quot;WiFi-B&quot;</span></span><br><span class="line"><span class="attribute">psk</span>=<span class="string">&quot;12345678&quot;</span></span><br><span class="line"><span class="attribute">key_mgmt</span>=WPA-PSK</span><br><span class="line"><span class="attribute">priority</span>=2</span><br><span class="line"><span class="attribute">scan_ssid</span>=1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中，<code>ssid</code>为WiFi的名称，<code>psk</code>为该WiFi密码，<code>priority</code>为该WiFi连接的优先级（数字越大越优先连接）。确保树莓派连接的WiFi是自己的电脑也在<strong>同时</strong>连接的。<br />
-文件保存后命名为<code>wpa_supplicant.conf</code>，用conf替代原来的txt后缀。将两个文件直接放在烧录完镜像之后的SD卡的<strong>根目录</strong>下。<br />
-打开Windows命令行，输入<code>arp -a</code>查看所有已连接设备的IP地址，记下。<br />
-完成上述工作之后，将TF卡插入树莓派，开机。</p>
-<h3 id="二-远程连接树莓派"><a class="markdownIt-Anchor" href="#二-远程连接树莓派"></a> 二、远程连接树莓派</h3>
-<p>确认树莓派的IP地址。<br />
-待树莓派启动后几分钟，若上一步的WiFi设置无误，即树莓派已经同电脑连接在同一个WiFi之下后，再次打开Windows命令行，输入<code>arp -a</code>查看所有已连接设备的IP地址，观察相较于树莓派未开机前多了哪一个，并确保其为：</p>
-<ul>
-<li>静态</li>
-<li>IP地址最后一个数字不是1或者255。</li>
-</ul>
-<p>该多出来的IP地址即为树莓派的IP地址。<br />
-（查找IP地址的其他方法例如可以使用软件“ipscan22.exe”，使用方式参考：<a href="https://www.cnblogs.com/SystemCall/archive/2019/06/16/11032391.html">https://www.cnblogs.com/SystemCall/archive/2019/06/16/11032391.html</a> ）<br />
-现在有两种连接树莓派的方式。一种是通过ssh，另一种是通过vnc。第一次连接必须使用ssh。打开命令行，输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh pi@[树莓派ip地址]</span><br></pre></td></tr></table></figure>
-<p>其中，pi为默认账户名称（账户名称以后<strong>不要更改</strong>，除非已经熟悉账户进阶操作）。如果树莓派连接了与电脑相同的WiFi，在输入命令后其会弹出输入密码的指令。<br />
-默认帐号如下：Username：<code>pi</code> Password：<code>raspberry</code><br />
-输入无误后会显示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberry <span class="comment"># ~ </span></span><br></pre></td></tr></table></figure>
-<p>即为树莓派操作系统的命令行界面。如果显示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">remote host identification has changed</span><br></pre></td></tr></table></figure>
-<p>则需要按照报错信息删除.ssh文件夹下的known_hosts文件重新连接。<br />
-之后会提示输入<code>passwd</code>进行修改密码，可以不修改，后面会有提示。<br />
-输入<code>sudo apt-get install xrdp</code>安装对Windows远程桌面的支持。<br />
-（有一说需要在终端中输入<code>sudo apt-get install ttf-wqy-microhei</code>安装中文字体，但是经测试不需要安装也可加载中文）<br />
-输入<code>sudo raspi-config</code>进入树莓派系统配置。大概的界面如下：<img data-src="https://s1.ax1x.com/2020/05/26/tF7Ygf.png" alt="" /><br />
-接下来要配置的有：默认时间、默认地区、默认语言、默认开机方式。<br />
-这里使用方向键↑↓进行选择，方向键←→在显示选择和返回时使用，按回车键确认，空格键用于某些时候的选择。<br />
-其中需要修改如下所示的几个选项。<br />
-1、Change user password。前面若没有修改可以在这里修改。<br />
-2、Boot options。选择B1，再选择B4，目的是使之后开机默认进入图形界面。选择B3，再选择no，关闭开机前动画。<br />
-3、Localisation options。选择I1系统调整语言，会有多种语言的选项，按空格键进行选择，被选择显示的语言会在左边[ ]内有<code>*</code>号。其中有一些是<strong>必须</strong>选择的：<br />
-<img data-src="https://s1.ax1x.com/2020/05/26/tF7cvT.jpg" alt="" /></p>
-<ul>
-<li><strong>en_GB.UTF-8</strong>、<strong>UTF-8</strong>、<strong>zh_CN.UTF-8</strong><br />
-选择完之后按回车键，接着选择默认语言，在其中选择<strong>zh_CN.UTF-8</strong>。等待一段时间。<br />
-接着选I2调整时区。选择Asia之后选择shanghai。<br />
-接着选I4调整网络地区。选择CN China。<br />
-4、Interfacing options。选择开启P1 camera、P2 SSH、P3 VNC、P6 serial、P8 remote gpio。<br />
-5、Advanced options。开启A1，用于充分利用TF卡空间。开启A2，在整个屏幕上显示。选择A4，再选择force 3.5mm，使声音从耳机孔流出。设置分辨率，选择A5，再选择DMT mode 85或者更大的分辨率，才能够在使用vnc时正常显示，否则会显示<code>cannot currently show the desktop</code>。选择A6，提高显示画质（但是在4B上未配置成功）。<img data-src="https://s1.ax1x.com/2020/05/26/tF7jVH.png" alt="" /><br />
-6、Update。可以选择但是一般不会更新成功（涉及到换源问题）。<br />
-（参考：<a href="http://www.waveshare.net/study/article-597-1.html">http://www.waveshare.net/study/article-597-1.html</a> ，但是此教程对应的树莓派版本较旧）<br />
-设置完毕，选择yes进行重启。</li>
-</ul>
-<h3 id="三-进入图形界面"><a class="markdownIt-Anchor" href="#三-进入图形界面"></a> 三、进入图形界面</h3>
-<p>现在可以使用ssh或者vnc进入树莓派图形界面。</p>
-<h4 id="1-ssh"><a class="markdownIt-Anchor" href="#1-ssh"></a> 1、ssh</h4>
-<p>在开始菜单→Windows附件中找到<strong>远程桌面</strong>，在“计算机”中输入树莓派的IP地址，进入登录界面之后输入用户名pi和你设定的密码就可以进入树莓派桌面。<br />
-除了使用远程桌面连接ssh，还可使用其他软件进行登陆，例如putty、xshell6等。</p>
-<h4 id="2-vnc"><a class="markdownIt-Anchor" href="#2-vnc"></a> 2、vnc</h4>
-<p>打开已经安装好的vnc viewer，输入树莓派IP地址，点continue（第一次连接），之后输入用户名pi，密码（可以选择下面的remember password，以后不用再输入），进入树莓派桌面。<br />
-进入图形界面时的操作速度取决于：（1）树莓派本身内存大小；（2）运行远程桌面机器处理器。例如，树莓派4B的2G版本下，系统操作速度：ssh（电脑端）&gt;vnc（电脑端）&gt;vnc（iOS）端。<br />
-<strong>不建议</strong>同时登录ssh和vnc。<br />
-第一次进入桌面会自动提示进行配置初始设定，其中第一个点“use us keyboard”之后选择next，第二个密码进行修改后next（必须输入内容，可以将你设定好的密码再输进去就可），第三个可以直接next，第四个WiFi界面直接skip，完成配置（因为前面已经配置WiFi了）。<br />
-如果你一直点next，会跳到系统update software界面进行更新，但是一般会失败，换源问题。<br />
-（其他可以vnc连接的软件还有更强大的teamviewer，配置方式参考：<br />
-<a href="https://github.com/TommyZihao/Zihao-Blog/blob/master/02%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%E9%85%8D%E7%BD%AE%E6%A0%91%E8%8E%93%E6%B4%BE.md">https://github.com/TommyZihao/Zihao-Blog/blob/master/02一劳永逸配置树莓派.md</a> ）</p>
-<h3 id="四-进行系统基础配置"><a class="markdownIt-Anchor" href="#四-进行系统基础配置"></a> 四、进行系统基础配置</h3>
-<h4 id="1-换源"><a class="markdownIt-Anchor" href="#1-换源"></a> 1、换源</h4>
-<ul>
-<li>官方的树莓派软件下载源更换*（老手可直接用vim编辑）*：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-<p>在nano中将原来的源用#注释掉，换成国内源（以中科大为例）。<br />
-在新的一行添加</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">deb http:<span class="regexp">//mi</span>rrors.ustc.edu.cn<span class="regexp">/raspbian/</span>raspbian/ buster main contrib non-free rpi</span><br></pre></td></tr></table></figure>
-<p>（注意，buster不是stretch）Ctrl+o保存，按回车， Ctrl+x退出。然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure>
-<p>注释然后添加：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">deb http:<span class="regexp">//mi</span>rrors.ustc.edu.cn<span class="regexp">/archive.raspberrypi.org/</span>debian/ buster main ui</span><br></pre></td></tr></table></figure>
-<p>执行（这一步时间较长）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
-<ul>
-<li>python的pip下载源更换：</li>
-</ul>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo nano <span class="regexp">/etc/</span>pip.conf</span><br></pre></td></tr></table></figure>
-<p>同上注释掉原来源，换成国内源（以中科大为例）。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">timeout &#x3D; 10</span><br><span class="line">index-url &#x3D; https:&#x2F;&#x2F;pypi.mirrors.ustc.edu.cn&#x2F;simple&#x2F;</span><br><span class="line">extra-index-url &#x3D; https:&#x2F;&#x2F;www.piwheels.org&#x2F;simple&#x2F;</span><br><span class="line">[install]</span><br><span class="line">trusted-host &#x3D; pypi.mirrors.ustc.edu.cn</span><br></pre></td></tr></table></figure>
-<p>保存之后执行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo pip3 install --upgrade pip</span><br></pre></td></tr></table></figure>
-<p>（更多的国内源参见：<br />
-Raspbian软件源：<a href="https://www.jianshu.com/p/67b9e6ebf8a0">https://www.jianshu.com/p/67b9e6ebf8a0</a> 注意stretch改为buster<br />
-pip源：<a href="https://www.pisugar.net/20190715/">https://www.pisugar.net/20190715/</a> ）</p>
-<h4 id="2-vim"><a class="markdownIt-Anchor" href="#2-vim"></a> 2、vim</h4>
-<p>树莓派默认不带vim（自带vi）。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
-<h4 id="3-输入法"><a class="markdownIt-Anchor" href="#3-输入法"></a> 3、输入法</h4>
-<p>有三种输入法可供选择：fcitx，scim，ibus。</p>
-<ul>
-<li>fcitx（接近Windows）：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install fcitx fcitx-googlepinyin fcitx-module-cloudpinyin fcitx-sunpinyin</span><br></pre></td></tr></table></figure>
-<ul>
-<li>scim（不方便）：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install scim-pinyin</span><br></pre></td></tr></table></figure>
-<ul>
-<li>ibus（已知缺陷，中文输入时有可能乱码）：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install ibus ibus-pinyin</span><br></pre></td></tr></table></figure>
-<h4 id="4-python推荐安装模块"><a class="markdownIt-Anchor" href="#4-python推荐安装模块"></a> 4、python推荐安装模块</h4>
-<p>pip升级：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pip3 install --upgrade pip</span><br></pre></td></tr></table></figure>
-<p>查看pip已经安装模块（终端中需注意python2和python3）：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 list</span><br></pre></td></tr></table></figure>
-<h4 id="5-python版本问题"><a class="markdownIt-Anchor" href="#5-python版本问题"></a> 5、python版本问题</h4>
-<p>系统已经预装python2、python3，默认的python版本为<strong>python2.7</strong>。输入python、pip时分别会显示python2、pip2。使用python3需要输入python3、pip3。<br />
-更改默认python版本方法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/bin</span><br><span class="line">sudo rm -rf python</span><br><span class="line">sudo ln -s /usr/bin/python3 /usr/bin/python</span><br></pre></td></tr></table></figure>
-<p>如需恢复为python2，将上述步骤中python3改为python2。<br />
-<s>不排除以后报错</s></p>
-<h4 id="6-系统备份"><a class="markdownIt-Anchor" href="#6-系统备份"></a> 6、系统备份</h4>
-<p>比较简便的操作是继续使用上述烧录软件win32diskimager，输入备份镜像名（需要<strong>手动</strong>加img后缀），选择树莓派系统的SD卡后点write，此过程时间长且会生成和SD卡容量<strong>一样大</strong>的镜像文件，较浪费空间。<br />
-假如条件允许，可以参考：<a href="https://www.zhihu.com/question/55406328">https://www.zhihu.com/question/55406328</a> 。</p>
-<h4 id="7-其他软件安装"><a class="markdownIt-Anchor" href="#7-其他软件安装"></a> 7、其他软件安装</h4>
-<ul>
-<li>趣味：安装oneko、cmatrix</li>
-<li>练习打字软件：ktouch（apt安装）、<a href="https://www.tipp10.com/en/download/getfile/5/">tipp10</a></li>
-<li>垃圾清理软件：<a href="https://www.bleachbit.org/download/file/t?file=bleachbit_2.2_all_debian9.deb">bleachbit</a>（谨慎使用）</li>
-<li>扫雷：gnome-mines</li>
-<li>识别验证码（配合pytesseract）：tesseract-ocr</li>
-<li>Chrome浏览器默认私密浏览：在快捷方式中编辑properties→桌面项→命令 处添加<code>--incognito</code></li>
-<li>vscode：安装vs code – oss，在linux上使用</li>
-<li>普通用户<code>xhost +</code></li>
-</ul>
-<!--
-python推荐安装模块（其中一些安装时间会很长）：
-beautifulsoup4、cpython、ddgr、imageio、ipython、jieba、jupyter、manimlib、matplotlib、numpy、pandas、pillow、pyecharts、pyinstaller、pylab、pyqt5、pytesseract、requests、scikit-learn、scipy、scrapy、six、statsmodels、sympy、tensorflow、wordcloud、xlrd、xlwt
-注：
-1、安装python的scipy时需要首先安装python-opencv gfortran libatlas-dev
-2、安装pycairo要通过whl安装；安装manimlib要设定Unicode UTF-8
--->
-]]></content>
-      <categories>
-        <category>求知</category>
-      </categories>
-      <tags>
-        <tag>树莓派</tag>
       </tags>
   </entry>
   <entry>
@@ -1555,7 +1555,7 @@ function fantihuan() {
 <div class="note default">
             <p>替换规则有：<br />A -&gt; Д; G -&gt; ☭; IO -&gt; Ю; N -&gt; И; R -&gt; Я; U -&gt; Ц; W -&gt; Ш; X -&gt; Ж; Y -&gt; У</p>
           </div>
-<textarea id="sequence1" rows="4" cols="20" style="resize:none;border-radius:5px;" placeholder="原文" required>
+<textarea id="sequence1" rows="8" cols="20" style="resize:none;border-radius:5px;" placeholder="原文" required>
 Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
 </textarea><br>
 <button class="swalbtn" onclick="tihuan1()">替换</button>
@@ -1577,12 +1577,259 @@ function tihuan1() {
 }
 </script>
 <hr>
+<h2 id="eu4编码转换器"><a class="markdownIt-Anchor" href="#eu4编码转换器"></a> eu4编码转换器</h2>
+<p>看到了paratranz上的<a href="https://paratranz.cn/utilities/converter">MOD 工具</a>，于是就想拿到自己的博客试一试。脚本来源自：<a href="https://gist.github.com/bruceCzK">https://gist.github.com/bruceCzK</a></p>
+<!--例行膜拜大佬-->
+<p>此工具只适用于新版的eu4（<strong>1.26版本之后</strong>）的编码，将编码从<code>cp1252</code>转换至<code>utf8</code>。</p>
+<!--
+https://gist.github.com/bruceCzK
+https://gist.github.com/bruceCzK/96ad6e054111f929ed67291552d36334
+https://gist.github.com/bruceCzK/5e1139a35b39126c4d8455e2148667c8
+-->
+<script>
+function specialEscape(char, toUtf8, newVersion) {
+  /* DO NOT escape valid char */
+  if (char.codePointAt(0) < 256) {
+    return char
+  }
+  const hex = char.codePointAt(0).toString(16)
+  /* default if UTF8, so hex is 4 length for most letters
+   * split low byte and high byte
+   * transform decimal to hex
+   */
+  let low = parseInt(hex.slice(-2), 16) /* last 2 byte */
+  let high = parseInt(hex.slice(0, 2), 16) /* first 2 bytes */
+
+  /* Magic numbers */
+  let lowByteOffset = 15
+  const highByteOffset = -9
+
+  const internalChars = [
+    0x00, 0x0A, 0x0D,
+    0x20,
+    0x22, 0x24,
+    0x40, 0x5B, 0x5C,
+    0x7B, 0x7D, 0x7E, 0x80,
+    0xA3, 0xA4, 0xA7, 0xBD,
+    0x3B, /* ; */
+    0x5D, /* ] */
+    0x5F, /* _ */
+    0x3D, /* = */
+    0x23 /* # */
+  ]
+
+  if (toUtf8) {
+    internalChars.push(0x2F) /* backslash (/) Will cause province name error if not escaped */
+    if (!newVersion) {
+      /* 0x20 in oldVersion escape will be transform to backslash which will not be parsed right by the engine
+       * So it has to be removed
+       * Will be transformed to 0x2f (backslash) in high byte, remove it
+       */
+      internalChars.splice(internalChars.indexOf(0x20), 1)
+    }
+  }
+
+  if (newVersion) {
+    /* After EU4 1.26 the rule has changed
+     * Yet CK2 always uses the old rule
+     */
+    lowByteOffset = 14
+  }
+
+  let escapeChr = 0x10
+  /* because characters in internalChars will be used in game as special characters, such as csv delimiter
+   * so we have to escape these characters
+   * 0x10 0x11 0x12 0x13 are all leading character to determine a multibyte letter start, depends on how the escape works
+   */
+  if (internalChars.includes(high)) {
+    escapeChr += 2
+  }
+  if (internalChars.includes(low)) {
+    escapeChr++
+  }
+
+  /* Make the escape so the characters will be parsed by engine correctly
+   * Copy from https://github.com/matanki-saito/EU4SpecialEscape/blob/ea331f4633ca6b8e7661bf3a1973242ef4e021d2/ConsoleApplication3/ConsoleApplication3.cpp#L259
+   */
+  switch (escapeChr) {
+    case 0x11:
+      low += lowByteOffset
+      break
+    case 0x12:
+      high += highByteOffset
+      break
+    case 0x13:
+      low += lowByteOffset
+      high += highByteOffset
+      break
+    case 0x10:
+    default:
+      break
+  }
+
+  if (toUtf8) {
+    /* For EU4
+     * Transform Latin1 extended control characters to utf8
+     * Chars in this section will not display correctly in utf8 encoding
+     */
+    low = cp1252ToUtf8(low)
+    high = cp1252ToUtf8(high)
+  }
+
+  /* Convert the hex codePoint back to actually character */
+  return [escapeChr, low, high].map(c => String.fromCodePoint(c)).join('')
+}
+
+function cp1252ToUtf8(char) {
+  const escapeList = {
+    0x80: 0x20AC, 0x82: 0x201A, 0x83: 0x0192, 0x84: 0x201E,
+    0x85: 0x2026, 0x86: 0x2020, 0x87: 0x2021, 0x88: 0x02C6,
+    0x89: 0x2030, 0x8A: 0x0160, 0x8B: 0x2039, 0x8C: 0x0152,
+    0x8E: 0x017D, 0x91: 0x2018, 0x92: 0x2019, 0x93: 0x201C,
+    0x94: 0x201D, 0x95: 0x2022, 0x96: 0x2013, 0x97: 0x2014,
+    0x98: 0x02DC, 0x99: 0x2122, 0x9A: 0x0161, 0x9B: 0x203A,
+    0x9C: 0x0153, 0x9E: 0x017E, 0x9F: 0x0178
+  }
+  return escapeList[char] || char
+}
+
+function decodeString(string, encoding, game) {
+  /* string has to be utf8 */
+  let content = ''
+  for (let i = 0; i < string.length; i++) {
+    const char = string[i].codePointAt(0)
+    if (char >= 0x10 && char <= 0x13) {
+      /* with leading control character */
+      let high = string[i + 2].codePointAt(0) /* high byte */
+      let low = string[i + 1].codePointAt(0) /* low byte */
+
+      let lowByteOffset = 15
+      const highByteOffset = -9
+
+      if (game === 'eu4') {
+        lowByteOffset = 14
+      }
+      /* some of the chars has been converted during encode, we need to convert it back */
+      high = UCS2ToCP1252(high)
+      low = UCS2ToCP1252(low)
+
+      i += 2
+      /* convert characters back */
+      switch (char) {
+        case 0x11:
+          low -= lowByteOffset
+          break
+        case 0x12:
+          high -= highByteOffset
+          break
+        case 0x13:
+          low -= lowByteOffset
+          high -= highByteOffset
+          break
+        case 0x10:
+        default:
+          break
+      }
+
+      /* back to utf8
+       * eg. 大 -> 0x10 0x59 0x27
+       * the backward process will be String.fromCodePoint(0x5927)
+       */
+      const codePoint = [high, low]
+        .map(l => parseInt(l).toString(16)) // convert char to hex
+        .map(l => ('0' + l).slice(-2)) // left pad hex with 0
+        .join('')
+
+      content += String.fromCodePoint(parseInt(codePoint, 16))
+    } else {
+      /* skip if char is within latin1 range */
+      content += string[i]
+    }
+  }
+  return content
+}
+
+const charMap = {
+  0x20AC: 0x80,
+  0x201A: 0x82,
+  0x0192: 0x83,
+  0x201E: 0x84,
+  0x2026: 0x85,
+  0x2020: 0x86,
+  0x2021: 0x87,
+  0x02C6: 0x88,
+  0x2030: 0x89,
+  0x0160: 0x8A,
+  0x2039: 0x8B,
+  0x0152: 0x8C,
+  0x017D: 0x8E,
+  0x2018: 0x91,
+  0x2019: 0x92,
+  0x201C: 0x93,
+  0x201D: 0x94,
+  0x2022: 0x95,
+  0x2013: 0x96,
+  0x2014: 0x97,
+  0x02DC: 0x98,
+  0x2122: 0x99,
+  0x0161: 0x9A,
+  0x203A: 0x9B,
+  0x0153: 0x9C,
+  0x017E: 0x9E,
+  0x0178: 0x9F
+}
+
+function UCS2ToCP1252(cp) {
+  return charMap[cp] || cp
+}
+
+function convert1() {
+  var str = document.getElementById("seq1").value;
+  var converted = '';
+  for(i = 0; i < str.length; i++) {
+    converted += specialEscape(str[i], true, true);
+  }
+  document.getElementById("seq2").value = converted;
+}
+
+function convert2() {
+  var str = document.getElementById("seq2").value;
+  var converted = decodeString(str, true, 'eu4');
+  document.getElementById("seq1").value = converted;
+}
+</script>
+<div style="text-align: center;">
+<textarea id="seq1" rows="10" cols="18" style="resize: none; border-radius: 5px; border: 2px dotted #999666; padding: 8px;" placeholder="未编码文字">中华帝国</textarea>
+<div>
+  <button class="swalbtn" onclick="convert1()" style="margin: 5px 3em;">↓</button>|
+  <button class="swalbtn" onclick="convert2()" style="margin: 5px 3em;">↑</button>
+</div>
+<textarea id="seq2" rows="10" cols="18" style="resize: none; border-radius: 5px; border: 2px dotted #999666; padding: 8px;" placeholder="已编码文字"></textarea>
+</div>
 ]]></content>
       <categories>
         <category>求知</category>
       </categories>
       <tags>
         <tag>简单加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>latex数学符号大全</title>
+    <url>/2020/05/12/latex%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>在网上发现了一个latex数学符号大全的PDF，现摘录于此处。</p>
+<a id="more"></a>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpCwV.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpPoT.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUp9e0.jpg" alt="" /></p>
+<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpSLq.jpg" alt="" /></p>
+<p>原pdf下载地址：<a href="https://www.caam.rice.edu/~heinken/latex/symbols.pdf">链接</a>。</p>
+]]></content>
+      <categories>
+        <category>拾贝</category>
+      </categories>
+      <tags>
+        <tag>latex</tag>
       </tags>
   </entry>
   <entry>
@@ -2581,24 +2828,6 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
       <tags>
         <tag>梯度</tag>
         <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>latex数学符号大全</title>
-    <url>/2020/05/12/latex%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E5%A4%A7%E5%85%A8/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>在网上发现了一个latex数学符号大全的PDF，现摘录于此处。</p>
-<a id="more"></a>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpCwV.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpPoT.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUp9e0.jpg" alt="" /></p>
-<p><img data-src="https://s1.ax1x.com/2020/05/12/YUpSLq.jpg" alt="" /></p>
-<p>原pdf下载地址：<a href="https://www.caam.rice.edu/~heinken/latex/symbols.pdf">链接</a>。</p>
-]]></content>
-      <categories>
-        <category>拾贝</category>
-      </categories>
-      <tags>
-        <tag>latex</tag>
       </tags>
   </entry>
   <entry>
