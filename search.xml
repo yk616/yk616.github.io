@@ -1,164 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>博客更新日志</title>
-    <url>/2019/11/29/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
-<p>以下是按照时间倒序记录的本博客添加的新功能。</p>
-<div class="note info">
-            <p>本记录开始于2020年5月1日，因此对于先前的更新只能大概具体到月份，并且可能有所遗漏。</p>
-          </div>
-<h2 id="2020年"><a class="markdownIt-Anchor" href="#2020年"></a> 2020年</h2>
-<ul>
-<li>
-<p>12月31日：</p>
-<ul>
-<li>调整了网页黑白效果</li>
-</ul>
-</li>
-<li>
-<p>10月13日：</p>
-<ul>
-<li>将hexo升级至5.0版本，next升级至8.1版本</li>
-<li>增加了一键更换背景色功能</li>
-<li>由于个人原因，大幅砍掉博客的特效</li>
-<li>目前安装插件一览：
-<table>
-<thead>
-<tr>
-<th>插件名称</th>
-<th>插件功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>hexo-abbrlink</td>
-<td>生成唯一永久文章链接</td>
-</tr>
-<tr>
-<td>hexo-bilibili-bangumi</td>
-<td>hexo哔哩哔哩番剧页</td>
-</tr>
-<tr>
-<td>hexo-blog-encrypt</td>
-<td>博客文章加密</td>
-</tr>
-<tr>
-<td>hexo-generator-searchdb</td>
-<td>博客搜索功能</td>
-</tr>
-<tr>
-<td>hexo-neat</td>
-<td>压缩页面静态资源</td>
-</tr>
-<tr>
-<td>hexo-related-popular-posts</td>
-<td>添加相关文章</td>
-</tr>
-<tr>
-<td>hexo-renderer-markdown-it-plus</td>
-<td>渲染器</td>
-</tr>
-<tr>
-<td>hexo-tag-aplayer</td>
-<td>hexo音乐播放器</td>
-</tr>
-<tr>
-<td>hexo-word-counter</td>
-<td>网页字数及阅读时间统计</td>
-</tr>
-<tr>
-<td>theme-next-pace</td>
-<td>页面加载动画</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-</li>
-<li>
-<p>7月3日：更换渲染器为<code>hexo-renderer-markdown-it-plus</code>。</p>
-</li>
-<li>
-<p>5月12日：</p>
-<ul>
-<li>博客部署到netlify</li>
-<li>添加个人追番页面</li>
-</ul>
-</li>
-</ul>
-<!--https://github.com/HCLonely/hexo-bilibili-bangumi-->
-<ul>
-<li>
-<p>5月4日：添加当前页面二维码功能</p>
-</li>
-<li>
-<p>4月：</p>
-<ul>
-<li>优化链接页面</li>
-<li>实现sweetalert</li>
-</ul>
-</li>
-<li>
-<p>3月：</p>
-<ul>
-<li>添加黑夜模式</li>
-<li>优化阅读进度按钮及样式</li>
-</ul>
-</li>
-<li>
-<p>2月：</p>
-<ul>
-<li>添加贴边通知</li>
-<li>添加leancloud进行站点访问量统计及邮箱回复评论</li>
-<li>添加热度页面</li>
-<li>添加主页飘落特效</li>
-<li>首页元素进入视口特效</li>
-<li>优化分类页、标签页</li>
-<li>升级文章加密访问功能</li>
-<li>移动端进行显示优化</li>
-<li>设置文章唯一永久链接</li>
-<li>添加addthis分享</li>
-</ul>
-</li>
-<li>
-<p>1月：</p>
-<ul>
-<li>添加歌单页面</li>
-<li>添加相关文章推荐</li>
-<li>添加轮播图</li>
-<li>添加文章加密访问功能</li>
-</ul>
-</li>
-</ul>
-<h2 id="2019年"><a class="markdownIt-Anchor" href="#2019年"></a> 2019年</h2>
-<ul>
-<li>
-<p>12月：</p>
-<ul>
-<li>添加鼠标样式、点击特效</li>
-<li>添加博客内搜索功能</li>
-<li>添加天气插件</li>
-<li>添加follow me on github</li>
-<li>添加看板娘</li>
-<li>添加侧边栏粒子时钟</li>
-<li>自定义404页面</li>
-<li>添加链接页面</li>
-</ul>
-</li>
-<li>
-<p>11月：创建hexo博客并设置博客主题为NexT</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>探索</category>
-      </categories>
-      <tags>
-        <tag>Next配置</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>写作模板</title>
     <url>/2019/11/30/%E5%86%99%E4%BD%9C%E6%A8%A1%E6%9D%BF/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
@@ -469,6 +311,164 @@ margin-left/right:0px：与字体的距离。<br />
       </categories>
       <tags>
         <tag>模板</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客更新日志</title>
+    <url>/2019/11/29/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
+<p>以下是按照时间倒序记录的本博客添加的新功能。</p>
+<div class="note info">
+            <p>本记录开始于2020年5月1日，因此对于先前的更新只能大概具体到月份，并且可能有所遗漏。</p>
+          </div>
+<h2 id="2020年"><a class="markdownIt-Anchor" href="#2020年"></a> 2020年</h2>
+<ul>
+<li>
+<p>12月31日：</p>
+<ul>
+<li>调整了网页黑白效果</li>
+</ul>
+</li>
+<li>
+<p>10月13日：</p>
+<ul>
+<li>将hexo升级至5.0版本，next升级至8.1版本</li>
+<li>增加了一键更换背景色功能</li>
+<li>由于个人原因，大幅砍掉博客的特效</li>
+<li>目前安装插件一览：
+<table>
+<thead>
+<tr>
+<th>插件名称</th>
+<th>插件功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hexo-abbrlink</td>
+<td>生成唯一永久文章链接</td>
+</tr>
+<tr>
+<td>hexo-bilibili-bangumi</td>
+<td>hexo哔哩哔哩番剧页</td>
+</tr>
+<tr>
+<td>hexo-blog-encrypt</td>
+<td>博客文章加密</td>
+</tr>
+<tr>
+<td>hexo-generator-searchdb</td>
+<td>博客搜索功能</td>
+</tr>
+<tr>
+<td>hexo-neat</td>
+<td>压缩页面静态资源</td>
+</tr>
+<tr>
+<td>hexo-related-popular-posts</td>
+<td>添加相关文章</td>
+</tr>
+<tr>
+<td>hexo-renderer-markdown-it-plus</td>
+<td>渲染器</td>
+</tr>
+<tr>
+<td>hexo-tag-aplayer</td>
+<td>hexo音乐播放器</td>
+</tr>
+<tr>
+<td>hexo-word-counter</td>
+<td>网页字数及阅读时间统计</td>
+</tr>
+<tr>
+<td>theme-next-pace</td>
+<td>页面加载动画</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p>7月3日：更换渲染器为<code>hexo-renderer-markdown-it-plus</code>。</p>
+</li>
+<li>
+<p>5月12日：</p>
+<ul>
+<li>博客部署到netlify</li>
+<li>添加个人追番页面</li>
+</ul>
+</li>
+</ul>
+<!--https://github.com/HCLonely/hexo-bilibili-bangumi-->
+<ul>
+<li>
+<p>5月4日：添加当前页面二维码功能</p>
+</li>
+<li>
+<p>4月：</p>
+<ul>
+<li>优化链接页面</li>
+<li>实现sweetalert</li>
+</ul>
+</li>
+<li>
+<p>3月：</p>
+<ul>
+<li>添加黑夜模式</li>
+<li>优化阅读进度按钮及样式</li>
+</ul>
+</li>
+<li>
+<p>2月：</p>
+<ul>
+<li>添加贴边通知</li>
+<li>添加leancloud进行站点访问量统计及邮箱回复评论</li>
+<li>添加热度页面</li>
+<li>添加主页飘落特效</li>
+<li>首页元素进入视口特效</li>
+<li>优化分类页、标签页</li>
+<li>升级文章加密访问功能</li>
+<li>移动端进行显示优化</li>
+<li>设置文章唯一永久链接</li>
+<li>添加addthis分享</li>
+</ul>
+</li>
+<li>
+<p>1月：</p>
+<ul>
+<li>添加歌单页面</li>
+<li>添加相关文章推荐</li>
+<li>添加轮播图</li>
+<li>添加文章加密访问功能</li>
+</ul>
+</li>
+</ul>
+<h2 id="2019年"><a class="markdownIt-Anchor" href="#2019年"></a> 2019年</h2>
+<ul>
+<li>
+<p>12月：</p>
+<ul>
+<li>添加鼠标样式、点击特效</li>
+<li>添加博客内搜索功能</li>
+<li>添加天气插件</li>
+<li>添加follow me on github</li>
+<li>添加看板娘</li>
+<li>添加侧边栏粒子时钟</li>
+<li>自定义404页面</li>
+<li>添加链接页面</li>
+</ul>
+</li>
+<li>
+<p>11月：创建hexo博客并设置博客主题为NexT</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>探索</category>
+      </categories>
+      <tags>
+        <tag>Next配置</tag>
       </tags>
   </entry>
   <entry>
@@ -950,6 +950,10 @@ canon出品的免费纸模型素材提供网站</p>
 查看B站日/周/月刊、视频/弹幕/封面下载、历史数据、UP榜、bilibili总榜</p>
 </li>
 <li>
+<p><a href="https://versus.com/cn">Versus</a><br />
+万物皆可对比</p>
+</li>
+<li>
 <p><a href="http://insxz.com/">宜配屋视频下载</a><br />
 支持多平台网站视频下载</p>
 </li>
@@ -1423,83 +1427,6 @@ NexT<code>v8.1.0</code>版本中移除了Valine支持（详见<a href="https://g
       </tags>
   </entry>
   <entry>
-    <title>利用CDN进行加速</title>
-    <url>/2020/05/02/%E5%88%A9%E7%94%A8CDN%E8%BF%9B%E8%A1%8C%E5%8A%A0%E9%80%9F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
-<h2 id="rawgithubusercontentcom加速"><a class="markdownIt-Anchor" href="#rawgithubusercontentcom加速"></a> raw.githubusercontent.com加速</h2>
-<blockquote>
-<p>该加速服务来自<a href="https://blog.staticdn.net/">StaticDN BLOGS</a>。</p>
-<p>如果下面的图片能够显示则该cdn能够正常服务。<br />
-<img data-src="https://raw.staticdn.net/imagehosted/images/master/2020/03/07%20gettyimages-969935938_resized.jpg" alt="" /></p>
-</blockquote>
-<p><div style="text-align:center;"><button onclick="accelerate1();" class="swalbtn"><i class="fa fa-play"></i>&nbsp;开始</button></div></p>
-<h2 id="imgur反代"><a class="markdownIt-Anchor" href="#imgur反代"></a> imgur反代</h2>
-<blockquote>
-<p>该加速服务来自<a href="https://blog.staticdn.net/">StaticDN BLOGS</a>。</p>
-</blockquote>
-<p><div style="text-align:center;"><button onclick="accelerate2();" class="swalbtn"><i class="fa fa-play"></i>&nbsp;开始</button></div></p>
-<div class="note primary"><p align='center'>StaticDN BLOGS还提供了其他的加速服务，以上所列只是一部分。</p></div>
-<h2 id="stack-overflow加速"><a class="markdownIt-Anchor" href="#stack-overflow加速"></a> Stack Overflow加速</h2>
-<p>Stack Overflow访问速度较慢的原因是其使用了Google的CDN。有一个github仓库（<a href="https://github.com/justjavac/ReplaceGoogleCDN">ReplaceGoogleCDN</a>）通过浏览器插件的方式解决了此问题。下面是插件的安装地址。</p>
-<ul>
-<li>
-<p>Firefox插件地址：<br />
-<a href="https://addons.mozilla.org/zh-CN/firefox/addon/replace-google-cdn/">https://addons.mozilla.org/zh-CN/firefox/addon/replace-google-cdn/</a></p>
-</li>
-<li>
-<p>Chrome：</p>
-<ul>
-<li>插件地址：<br />
-<a href="https://chrome.google.com/webstore/detail/replace-google-cdn/kpampjmfiopfpkkepbllemkibefkiice">https://chrome.google.com/webstore/detail/replace-google-cdn/kpampjmfiopfpkkepbllemkibefkiice</a></li>
-<li>直接安装：<br />
-<a href="https://github.com/justjavac/ReplaceGoogleCDN/archive/master.zip">https://github.com/justjavac/ReplaceGoogleCDN/archive/master.zip</a></li>
-</ul>
-</li>
-</ul>
-<p>未完待续。。。</p>
-<script>
-function accelerate1(){
-  swal("请输入raw.githubusercontent.com链接:", {
-    content: "input",
-    icon: "info",
-  })
-  .then((value) => {
-    if (value.indexOf("githubusercontent.com") != -1) {
-      value = value.replace(/githubusercontent.com/, "staticdn.net")
-      window.open(value)
-    } else {
-      swal("输入内容不是githubusercontent链接", {
-        icon: "warning",
-      });
-    }
-  });
-}
-function accelerate2(){
-  swal("请输入i.imgur.com链接:", {
-    content: "input",
-    icon: "info",
-  })
-  .then((value) => {
-    if (value.indexOf("i.imgur.com") != -1) {
-      value = value.replace(/i.imgur/, "i.staticdn.net//i.imgur")
-      window.open(value)
-    } else {
-      swal("输入内容不是imgur链接", {
-        icon: "warning",
-      });
-    }
-  });
-}
-</script>
-]]></content>
-      <categories>
-        <category>探索</category>
-      </categories>
-      <tags>
-        <tag>CDN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>latin2marslang</title>
     <url>/2020/05/10/latin2marslang/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
@@ -1812,6 +1739,83 @@ function convert2() {
       </categories>
       <tags>
         <tag>简单加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>利用CDN进行加速</title>
+    <url>/2020/05/02/%E5%88%A9%E7%94%A8CDN%E8%BF%9B%E8%A1%8C%E5%8A%A0%E9%80%9F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a>
+<h2 id="rawgithubusercontentcom加速"><a class="markdownIt-Anchor" href="#rawgithubusercontentcom加速"></a> raw.githubusercontent.com加速</h2>
+<blockquote>
+<p>该加速服务来自<a href="https://blog.staticdn.net/">StaticDN BLOGS</a>。</p>
+<p>如果下面的图片能够显示则该cdn能够正常服务。<br />
+<img data-src="https://raw.staticdn.net/imagehosted/images/master/2020/03/07%20gettyimages-969935938_resized.jpg" alt="" /></p>
+</blockquote>
+<p><div style="text-align:center;"><button onclick="accelerate1();" class="swalbtn"><i class="fa fa-play"></i>&nbsp;开始</button></div></p>
+<h2 id="imgur反代"><a class="markdownIt-Anchor" href="#imgur反代"></a> imgur反代</h2>
+<blockquote>
+<p>该加速服务来自<a href="https://blog.staticdn.net/">StaticDN BLOGS</a>。</p>
+</blockquote>
+<p><div style="text-align:center;"><button onclick="accelerate2();" class="swalbtn"><i class="fa fa-play"></i>&nbsp;开始</button></div></p>
+<div class="note primary"><p align='center'>StaticDN BLOGS还提供了其他的加速服务，以上所列只是一部分。</p></div>
+<h2 id="stack-overflow加速"><a class="markdownIt-Anchor" href="#stack-overflow加速"></a> Stack Overflow加速</h2>
+<p>Stack Overflow访问速度较慢的原因是其使用了Google的CDN。有一个github仓库（<a href="https://github.com/justjavac/ReplaceGoogleCDN">ReplaceGoogleCDN</a>）通过浏览器插件的方式解决了此问题。下面是插件的安装地址。</p>
+<ul>
+<li>
+<p>Firefox插件地址：<br />
+<a href="https://addons.mozilla.org/zh-CN/firefox/addon/replace-google-cdn/">https://addons.mozilla.org/zh-CN/firefox/addon/replace-google-cdn/</a></p>
+</li>
+<li>
+<p>Chrome：</p>
+<ul>
+<li>插件地址：<br />
+<a href="https://chrome.google.com/webstore/detail/replace-google-cdn/kpampjmfiopfpkkepbllemkibefkiice">https://chrome.google.com/webstore/detail/replace-google-cdn/kpampjmfiopfpkkepbllemkibefkiice</a></li>
+<li>直接安装：<br />
+<a href="https://github.com/justjavac/ReplaceGoogleCDN/archive/master.zip">https://github.com/justjavac/ReplaceGoogleCDN/archive/master.zip</a></li>
+</ul>
+</li>
+</ul>
+<p>未完待续。。。</p>
+<script>
+function accelerate1(){
+  swal("请输入raw.githubusercontent.com链接:", {
+    content: "input",
+    icon: "info",
+  })
+  .then((value) => {
+    if (value.indexOf("githubusercontent.com") != -1) {
+      value = value.replace(/githubusercontent.com/, "staticdn.net")
+      window.open(value)
+    } else {
+      swal("输入内容不是githubusercontent链接", {
+        icon: "warning",
+      });
+    }
+  });
+}
+function accelerate2(){
+  swal("请输入i.imgur.com链接:", {
+    content: "input",
+    icon: "info",
+  })
+  .then((value) => {
+    if (value.indexOf("i.imgur.com") != -1) {
+      value = value.replace(/i.imgur/, "i.staticdn.net//i.imgur")
+      window.open(value)
+    } else {
+      swal("输入内容不是imgur链接", {
+        icon: "warning",
+      });
+    }
+  });
+}
+</script>
+]]></content>
+      <categories>
+        <category>探索</category>
+      </categories>
+      <tags>
+        <tag>CDN</tag>
       </tags>
   </entry>
   <entry>
@@ -2867,7 +2871,8 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 <p>然后进入到准备创建虚拟环境的目录，例如C盘根目录：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> c:\</span><br></pre></td></tr></table></figure>
 <p>执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virtualenv --no-site-packages venv</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">virtualenv venv</span><br></pre></td></tr></table></figure>
+<!--virtualenv --no-site-packages venv-->
 <p>这样就创建好了环境，目录为<code>c:\venv</code>。进入<code>venv</code>文件夹并激活：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> c:\venv</span><br></pre></td></tr></table></figure>
 <p>Windows下：</p>
